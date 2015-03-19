@@ -8,7 +8,7 @@
 
 ## Write a short comment describing this function
 
-## The makeCacheMatrix take an input in the form of a matrix,
+## The makeCacheMatrix takes an input in the form of a matrix,
 ## if no input param is provided, it will assign a matrix to an X var by default
 
 ## Testing process
