@@ -16,13 +16,13 @@
 
 makeCacheMatrix <- function(x = matrix()) {
 
-  ## The x var belongs to this scope, it is declared as a 
+  ## The 'x' var belongs to this scope, it is declared as a 
   ## param of the function, no need to declare it again.
   
   invMatx <- NULL
   
   set <- function(y) {
-    x <<- y ## if the set function is called, set x equals y input matrix
+    x <<- y ## if the set function is called, set x equals to the y input matrix
     invMatx <<- NULL ## reset matx if set is called because
                   ## matx will need to be recalulated with new input matrix
   }
@@ -32,7 +32,7 @@ makeCacheMatrix <- function(x = matrix()) {
   }
   
   setInverse <- function(inverse) {
-    matx <<- inverse ## set matx to newly calculated inverse matrix
+    invMatx <<- inverse ## set matx to newly calculated inverse matrix
   }
   
   getInverse <- function() {
@@ -41,7 +41,7 @@ makeCacheMatrix <- function(x = matrix()) {
   
   ## This is just to create a list named "list" to contain
   ## the functions declared above, this list will be returned
-  ## when makeCacheMatrix is called.
+  ## when makeCacheMatrix is called. To call functions, use "varName"$get()
   list(set = set, 
        get = get,
        setInverse = setInverse,
@@ -67,7 +67,7 @@ cacheSolve <- function(x, ...) {
   
   data <- x$get() ## This gets executed when the "if" above is false (aka inverse matrix does not exist)
   
-  inv <- solve(data, ...) ## solve for inverse matrix
+  inv <- solve(data, ...) ## solve for inverse matrix, solve() is a built in function
   
   x$setInverse(inv) ## call and set inverse to cache
   
