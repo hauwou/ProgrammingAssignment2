@@ -11,7 +11,15 @@
 ## The makeCacheMatrix take an input in the form of a matrix,
 ## if no input param is provided, it will assign a matrix to an X var by default
 
-
+## Testing process
+## Type: a<-makeCacheMatrix(), this will create an "a" object, with empty 'x' matrix
+## Type: a$get(), will return NULL because 'x' matrix is empty
+## Type: a$set(matrix(1:4,2,2)) to set 'x' OR Type: a<-makeCacheMatrix(matrix(1:4,2,2)) to skip some steps
+## Type: a$get(), and see the matrix that just got set
+## Type: a$getInverse(), see NULL since the cacheSolve has not been called
+## *** this current version does not prevent the direct call to set inverse >> a$setInverse(matrix(1:4,2,2))
+## Type: cacheSolve(a), this will return the inverse matrix WITHOUT the message "getting cached data"
+## Type: cacheSolve(a) again, will return the inverse matrix with the message "getting cached data"
 
 
 makeCacheMatrix <- function(x = matrix()) {
@@ -56,11 +64,14 @@ makeCacheMatrix <- function(x = matrix()) {
 
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
-  
+  # Start the clock!
+  ptm <- proc.time()
+  ##print(ptm)
   inv <- x$getInverse() ## assign inverse matrix from getInverse to inv variable
   
   if(!is.null(inv)) {
     message("getting cached data")
+    print(proc.time() - ptm)
     return(inv)
     ## if an inverse matrix existed (aka cached), return that matrix, exit function
   }
@@ -71,8 +82,11 @@ cacheSolve <- function(x, ...) {
   
   x$setInverse(inv) ## call and set inverse to cache
   
-  return (inv)
-
+  Sys.sleep(2) ## simulate long calculation process
   
+  # Stop the clock
+  print(proc.time() - ptm)
+  
+  return (inv)  
   
 }
